@@ -15,3 +15,6 @@
 
 # Part Five: Use a Random Word
    Done.
+
+# Part Six: Add "Restart" Button
+   Done.

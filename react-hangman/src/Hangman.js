@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Hangman.css";
+import {randomWord} from "./words"
 import img0 from "./0.jpg";
 import img1 from "./1.jpg";
 import img2 from "./2.jpg";
@@ -20,7 +21,7 @@ class Hangman extends Component {
     this.state = {
       nWrong: 0,
       guessed: new Set(),
-      answer: "apple"
+      answer: randomWord()
     };
     this.handleGuess = this.handleGuess.bind(this);
   }
@@ -29,7 +30,7 @@ class Hangman extends Component {
     if guessed letters are {a,p,e}, show "app_e" for "apple"
   */
   guessedWord() {
-    if (this.state.nWrong < 6) {
+    if (this.state.nWrong < this.props.maxWrong) {
       return this.state.answer
         .split("")
         .map(ltr => (this.state.guessed.has(ltr) ? ltr : "_"));
@@ -69,9 +70,9 @@ class Hangman extends Component {
       <div className='Hangman'>
         <h1>Hangman</h1>
         <img src={this.props.images[this.state.nWrong]} />
-        <p>Number Wrong: {this.state.nWrong}</p>
+        <p>Number Wrong: {this.state.nWrong} out of {this.props.maxWrong} Allowed Tries</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
-        {this.state.nWrong < 6 ? <p className='Hangman-btns'>{this.generateButtons()}</p> : "You Lose!"}
+        {this.state.nWrong < this.props.maxWrong ? <p className='Hangman-btns'>{this.generateButtons()}</p> : "You Lose!"}
       </div>
     );
   }
